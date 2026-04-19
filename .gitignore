@@ -1,0 +1,71 @@
+# 🔐 Secrets
+
+.env
+.env.*
+*.env
+
+# 🐍 Python
+
+**pycache**/
+*.py[cod]
+*$py.class
+
+# 📦 Virtual environments
+
+venv/
+.env/
+.venv/
+ENV/
+
+# 🧪 Django
+
+*.log
+db.sqlite3
+media/
+staticfiles/
+
+
+
+# */migrations/*
+
+# !*/migrations/**init**.py
+
+# 🧰 IDE / Editor
+
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 🐳 Docker
+
+docker-compose.override.yml
+
+# 📊 Celery
+
+celerybeat-schedule
+
+# 🧾 OS files
+
+.DS_Store
+Thumbs.db
+
+# 🔍 Coverage / tests
+
+.coverage
+htmlcov/
+
+# 📦 Build / dist
+
+build/
+dist/
+*.egg-info/
+
+# 🔐 PyCharm
+
+*.iml
+
+# 🧠 Misc
+
+*.bak
+*.tmp
