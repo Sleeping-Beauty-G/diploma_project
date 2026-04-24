@@ -1,115 +1,99 @@
 # 📦 Retail System API Documentation
+
 ## 🧾 Общее описание
 
-**Backend-приложение для автоматизации закупок в розничной сети.**
-**Реализовано на Django + Django REST Framework + Celery + PostgreSQL + Redis.**
+Backend-приложение для автоматизации закупок и управления заказами в розничной сети.
 
-**Система поддерживает:**
+### Используемый стек
+- Django
+- Django REST Framework
+- PostgreSQL
+- Redis
+- Celery
 
-- управление товарами и поставщиками
-- корзину пользователя
-- оформление заказов
-- асинхронные задачи (email, импорт)
-- JWT-аутентификацию
+### Основные возможности
+- JWT-аутентификация
+- Управление товарами и поставщиками
+- Корзина пользователя (CRUD)
+- Оформление и управление заказами
+- Асинхронные задачи
+- Импорт товаров из YAML
+
 ---
+
 ## 🌐 Базовый URL
-```
+
 http://localhost:8000/api/
-```
+
 ---
-## 🔐 1. Аутентификация
-**Регистрация**
 
-POST ```/api/register/```
+## 🔐 Аутентификация
 
-**Request:**
-```json
+### Регистрация пользователя
+
+POST /api/register/
+
+Request:
 {
   "username": "user1",
   "email": "user@mail.com",
   "password": "strongpassword",
   "role": "client"
 }
-```
-**Response:**
-```json
+
+Response:
 {
   "id": 1,
   "username": "user1",
   "email": "user@mail.com",
   "role": "client"
 }
-```
+
+---
+
 ### Получение JWT токена
 
-POST``` /api/token/```
+POST /api/token/
 
-**Request:**
-```json
+Request:
 {
   "username": "user1",
   "password": "strongpassword"
 }
-```
-**Response:**
-```json
+
+Response:
 {
   "access": "JWT_ACCESS_TOKEN",
   "refresh": "JWT_REFRESH_TOKEN"
 }
-```
----
-## 🔑 Использование токена
 
-Во всех защищённых запросах:
-```
+---
+
+### Использование токена
+
 Authorization: Bearer <access_token>
-```
----
-## 📦 2. Товары
-### Получение списка товаров
 
-GET ```/api/products/```
-
-**Response:**
-```json
-[
-  {
-    "id": 1,
-    "name": "iPhone 15",
-    "description": "Smartphone",
-    "product_infos": [
-      {
-        "id": 1,
-        "supplier": "Apple Supplier",
-        "price": 1200.00,
-        "quantity": 10,
-        "parameters": [
-          {
-            "parameter": {
-              "name": "Color"
-            },
-            "value": "Black"
-          }
-        ]
-      }
-    ]
-  }
-]
-```
----
-## 📊 Предложения товаров
-
-GET ```/api/productinfo/``` (если подключишь роутер)
 ---
 
-## 🛒 3. Корзина
+## 📦 Товары
+
+### Получить список товаров
+
+GET /api/products/
+
+### Получить предложения поставщиков
+
+GET /api/productinfo/
+
+---
+
+## 🛒 Корзина
+
 ### Получить корзину
 
-GET ```/api/cart/```
+GET /api/cart/
 
-**Response:**
-```json
+Response:
 {
   "id": 1,
   "items": [
@@ -120,104 +104,90 @@ GET ```/api/cart/```
     }
   ]
 }
-```
----
-### Добавить товар
 
-POST ```/api/cart/add/```
-```json
+### Добавить товар в корзину
+
+POST /api/cart/items/
+
 {
   "product_id": 1,
   "quantity": 2
 }
-```
----
-### Удалить товар
 
-POST ```/api/cart/remove/```
-```json
+### Изменить количество товара
+
+PATCH /api/cart/items/{id}/
+
 {
-  "product_id": 1
+  "quantity": 5
 }
-```
+
+### Удалить товар из корзины
+
+DELETE /api/cart/items/{id}/
+
 ---
-## 📦 4. Заказы
-### Создание заказа (Checkout)
 
-POST ```/api/orders/confirm/```
+## 📦 Заказы
 
-**Request:**
-```json
+### Создать заказ
+
+POST /api/orders/
+
 {
   "address": "Amsterdam, Main Street 1"
 }
-```
-**Response:**
-```json
+
+Response:
 {
-  "status": "order confirmed",
-  "order_id": 1
+  "id": 1,
+  "status": "confirmed"
 }
-```
----
-### Получение списка заказов
 
-GET ```/api/orders/```
+### Получить список заказов
 
-**Response:**
-```json
-[
-  {
-    "id": 1,
-    "address": "Amsterdam, Main Street 1",
-    "created_at": "2026-04-19T10:00:00Z",
-    "status": "confirmed",
-    "items": [
-      {
-        "product": 1,
-        "supplier": 1,
-        "quantity": 2,
-        "price": 1200.00
-      }
-    ]
-  }
-]
-```
----
-## Изменение статуса заказа
+GET /api/orders/
 
-POST ```/api/orders/{id}/change_status/```
+### Получить заказ по ID
 
-```json
+GET /api/orders/{id}/
+
+### Изменить статус заказа
+
+PATCH /api/orders/{id}/status/
+
 {
   "status": "shipped"
 }
-```
----
-## 📌 Возможные статусы заказа
-- new — новый
-- confirmed — подтверждён
-- paid — оплачен
-- shipped — отправлен
-- delivered — доставлен
-- canceled — отменён
----
-## 📥 5. Импорт товаров
-### Через Celery
-```python
-from products.tasks import import_products
-import_products.delay("shop_data.yaml")
-```
+
 ---
 
+## 📌 Возможные статусы заказа
+
+- new
+- confirmed
+- paid
+- shipped
+- delivered
+- canceled
+
+---
+
+## 📥 Импорт товаров
+
+### Через Celery
+
+from products.tasks import import_products
+import_products.delay("shop_data.yaml")
+
 ### Через management command
-```
+
 docker compose exec web python manage.py import_products
-```
+
 ---
 
 ## 📄 Формат YAML
-```YAML
+
 products:
   - name: iPhone 15
     supplier: Apple
@@ -226,49 +196,70 @@ products:
     parameters:
       Color: Black
       Memory: 128GB
-```
+
 ---
-## ⚙️ 6. Асинхронные задачи
 
-Используется:
+## ⚙️ Асинхронные задачи
 
-- **Celery** — выполнение задач
-- **Redis** — брокер
-**Пример задачи:**
+Используются:
+- Celery
+- Redis
+
+Примеры:
 - отправка email после оформления заказа
+- импорт товаров в фоне
+
 ---
-## 👥 7. Роли пользователей
+
+## 👥 Роли пользователей
+
 - client — покупатель
 - supplier — поставщик
 - admin — администратор
-## ❗ 8. Ошибки API
-| Код | Описание        |
-| --- | --------------- |
+
+### Разграничение доступа
+
+- Клиент управляет своей корзиной и заказами
+- Поставщик управляет своими товарами
+- Администратор имеет полный доступ
+
+---
+
+## ❗ Ошибки API
+
+| Код | Описание |
+|------|----------|
 | 400 | Неверный запрос |
-| 401 | Не авторизован  |
-| 403 | Нет доступа     |
-| 404 | Не найдено      |
-| 500 | Ошибка сервера  |
+| 401 | Не авторизован |
+| 403 | Нет доступа |
+| 404 | Не найдено |
+| 500 | Внутренняя ошибка сервера |
 
-## 🧪 9. Пример использования (cURL)
-**Получить товары**
-```
+---
+
+## 🧪 Примеры использования
+
+### Получить товары
+
 curl http://localhost:8000/api/products/
-```
-**Добавить в корзину**
-```
-curl -X POST http://localhost:8000/api/cart/add/ \
--H "Authorization: Bearer <token>" \
--H "Content-Type: application/json" \
+
+### Добавить товар в корзину
+
+curl -X POST http://localhost:8000/api/cart/items/ 
+-H "Authorization: Bearer <token>" 
+-H "Content-Type: application/json" 
 -d '{"product_id": 1, "quantity": 2}'
-```
-# 🏁 Итог
 
-## API поддерживает:
+---
 
-- ✔ JWT авторизацию
-- ✔ управление товарами
-- ✔ корзину
-- ✔ оформление заказов
-- ✔ асинхронные задачи
-- ✔ импорт данных
+## 🏁 Итог
+
+API поддерживает:
+
+- JWT-аутентификацию
+- Управление товарами
+- Управление корзиной
+- Оформление и отслеживание заказов
+- Асинхронные задачи
+- Импорт данных
+- Разграничение прав доступа
