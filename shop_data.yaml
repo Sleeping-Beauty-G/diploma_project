@@ -1,0 +1,50 @@
+products:
+  - name: iPhone 15
+    supplier: Apple Supplier
+    price: 999.99
+    stock: 10
+
+  - name: Samsung Galaxy S23
+    supplier: Samsung Supplier
+    price: 899.99
+    stock: 15
+
+  - name: Xiaomi Redmi Note 12
+    supplier: Xiaomi Supplier
+    price: 299.99
+    stock: 25
+
+  - name: MacBook Air M2
+    supplier: Apple Supplier
+    price: 1299.99
+    stock: 5
+
+  - name: Lenovo ThinkPad X1
+    supplier: Lenovo Supplier
+    price: 1399.99
+    stock: 7
+
+  - name: iPad Pro
+    supplier: Apple Supplier
+    price: 1099.99
+    stock: 8
+
+  - name: AirPods Pro
+    supplier: Apple Supplier
+    price: 249.99
+    stock: 20
+
+  - name: Samsung TV 55
+    supplier: Samsung Supplier
+    price: 799.99
+    stock: 6
+
+  - name: LG Monitor 27
+    supplier: LG Supplier
+    price: 399.99
+    stock: 12
+
+  - name: Logitech Mouse
+    supplier: Logitech Supplier
+    price: 49.99
+    stock: 50
