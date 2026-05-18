@@ -1,0 +1,95 @@
+
+products:
+  - name: iPhone 15
+    category: Smartphones
+    supplier: Apple Supplier
+    price: 999.99
+    stock: 10
+    parameters:
+      color: Black
+      memory: 256GB
+      display: 6.1"
+
+  - name: Samsung Galaxy S23
+    category: Smartphones
+    supplier: Samsung Supplier
+    price: 899.99
+    stock: 15
+    parameters:
+      color: White
+      memory: 128GB
+      display: 6.2"
+
+  - name: Xiaomi Redmi Note 12
+    category: Smartphones
+    supplier: Xiaomi Supplier
+    price: 299.99
+    stock: 25
+    parameters:
+      color: Blue
+      memory: 64GB
+
+  - name: MacBook Air M2
+    category: Laptops
+    supplier: Apple Supplier
+    price: 1299.99
+    stock: 5
+    parameters:
+      color: Silver
+      memory: 16GB RAM
+      storage: 512GB SSD
+
+  - name: Lenovo ThinkPad X1
+    category: Laptops
+    supplier: Lenovo Supplier
+    price: 1399.99
+    stock: 7
+    parameters:
+      memory: 32GB RAM
+      storage: 1TB SSD
+
+  - name: iPad Pro
+    category: Tablets
+    supplier: Apple Supplier
+    price: 1099.99
+    stock: 8
+    parameters:
+      display: 12.9"
+      storage: 256GB
+
+  - name: AirPods Pro
+    category: Audio
+    supplier: Apple Supplier
+    price: 249.99
+    stock: 20
+    parameters:
+      color: White
+      type: Wireless
+
+  - name: Samsung TV 55
+    category: TVs
+    supplier: Samsung Supplier
+    price: 799.99
+    stock: 6
+    parameters:
+      resolution: 4K
+      size: 55"
+
+  - name: LG Monitor 27
+    category: Monitors
+    supplier: LG Supplier
+    price: 399.99
+    stock: 12
+    parameters:
+      resolution: 2K
+      refresh_rate: 144Hz
+
+  - name: Logitech Mouse
+    category: Accessories
+    supplier: Logitech Supplier
+    price: 49.99
+    stock: 50
+    parameters:
+      type: Wireless
+      dpi: 16000
+
